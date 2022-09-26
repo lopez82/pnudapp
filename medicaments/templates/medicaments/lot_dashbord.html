@@ -1,0 +1,34 @@
+<h1 class="font-size-30 m-b-0 text-success m-t-15">{{lot.num_lot}}</h1>
+<div class="row" id="lots">
+    <div class="col-md-4 border right">
+       <ul class="list tick" >
+        <li>Produit: <span class="text-bold">{{lot.produit}}</span></li>
+        <li>CMM: <span class="text-bold">{{lot.cmm|intcomma}}</span></li>
+        <li>Qte: <span class="text-bold">{{lot.quantite|intcomma}}</span></li>
+        <li>Peremption: <span class="text-bold">{{lot.date_exp}}</span> </li>
+        <li>MSD/lot: <span class="text-bold">{{lot.msd}}</span> </li>
+        <li>Fin probable(lot): <span class="text-bold">{{lot.fin_prob}}</span> </li>
+        <li>Risque rupture avant 6 mois: <span class="text-bold {% if lot.rupture_6mois == 'Oui' %} text-danger
+            {% else %} text-success
+            {% endif %}">{{lot.rupture_6mois}}</span></li>
+        
+       </ul> 
+    </div>
+    
+    <div class="col-md-4">
+        <ul class="list tick">
+            <li>Risque exp: <span class="text-bold {% if lot.risque_exp == 'Oui' %} text-danger
+                {% else %} text-success
+                {% endif %}">{{lot.risque_exp}}</span></li>
+            <li>Risque exp avant 6 mois: <span class="text-bold {% if lot.risque_exp_6mois == 'Oui' %} text-danger
+                {% else %} text-success
+                {% endif %}">{{lot.risque_exp_6mois}}</span></li>
+            <li>Qte exp avant 6 mois: <span class="text-bold">{{lot.qte_exp_6mois}}</span></li>
+            <li>Qte exp:<span class="text-bold">{{lot.qte_exp}}</span></li>
+            <li>Montant equivalent Qte exp: <span class="text-bold">{{lot.montant_exp|intcomma}} </span></li>
+            <li>Stock utilisable: <span class="text-bold">{{ lot.stock_utilisable|intcomma }} </span></li>
+            <li>MSD utilisable: <span class="text-bold">{{lot.msd_utilisable}}</span></li>
+        </ul>
+    </div>
+    <div class="col-md-4 border left"></div>
+</div>

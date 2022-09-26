@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}APPMed{% endblock title %}
+   {% block header %}
+   <div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+            <a href="{% url 'home' %}">
+                <div class="logo logo-dark" style="background-image: url({% static 'images/logo/abrema.jpg' %});"></div>
+                <div class="logo logo-white" style="background-image: url({% static 'images/logo/logo-white.png' %});"></div>
+            </a>
+        </div>
+        <ul class="nav-left">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <!-- <img src="{% static 'images/logo/burundi.png' %} " alt="" class=""> -->
+        <h3 class="m-v-10" style="text-align: center;">
+            Gestion des medicaments
+        </h3>
+        
+        
+        <ul class="nav-right">
+            <li class="m-r-10">
+                <!--  right menu for login and profiles options-->
+            </li>
+        </ul>
+    </div>
+</div>
+   {% endblock header %}
+
+
+{% block pagecontainer %}
+<div class="page-container p-l-5">
+ 
+
+ {% block maincontent %}
+ <div class="main-content">
+    <div class="container-fluid m-l-0 p-l-0">
+        <form method="post">
+            {% csrf_token %}
+           
+            <div class="card col-6">
+                <div class="card-header">
+                    <h4 class="text-info">Creation Bon de sortie: </h4>
+                </div>
+                <div class="card-body">
+                {{ form.non_form_errors }}
+                
+               {{ form|crispy }}  
+                </div>
+            </div>
+            <div class="mt-3 mb-5">
+                <button type="submit" class="px-5 btn btn-info">Submit</button>
+                <button  class="px-5 btn btn-warning" onclick="history.go(-1);">Retour</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+ {%  endblock maincontent %}
+ {% block footer %}
+ <footer class="content-footer">
+    <div class="footer">
+        <div class="copyright">
+            <span>Copyright © 2022 <b class="text-dark">Lopez</b>. All rights reserved.</span>
+            
+        </div>
+    </div>
+</footer>
+ {% endblock footer%}
+</div>
+
+{% endblock pagecontainer %}
+
+
+{% block js%}
+<script>
+    $(document).ready(
+        function(){               
+    $("#id_categorie").change(function () {
+        console.log($(this));
+        const categorie_id = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+        $.ajax({                       // initialize an AJAX request
+            type: "POST",
+            url: '{% url "get-products-ajax" %}',
+            data: {
+                'categorie_id': categorie_id,       // add the country id to the POST parameters
+                'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {   // `data` is from `get_topics_ajax` view function
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (data) {
+                    html_data += `<option value="${data.id}">${data.designation}</option>`
+                });
+                $("#id_produit_sortie").html(html_data); // replace the contents of the topic input with the data that came from the server
+            }
+        });
+    });
+    }
+    )
+    </script>
+{% endblock js%}
+

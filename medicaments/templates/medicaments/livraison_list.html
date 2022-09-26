@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+{% block title %}APPMed{% endblock title %}
+   {% block header %}
+   <div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+            <a href="{% url 'home' %}">
+                <div class="logo logo-dark" style="background-image: url({% static 'images/logo/abrema.jpg' %});"></div>
+                <div class="logo logo-white" style="background-image: url({% static 'images/logo/logo-white.png' %});"></div>
+            </a>
+        </div>
+        <ul class="nav-left">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <!-- <img src="{% static 'images/logo/burundi.png' %} " alt="" class=""> -->
+        <h3 class="m-v-10" style="text-align: center;">
+            Gestion des medicaments
+        </h3>
+        
+        
+        <ul class="nav-right">
+            <li class="m-r-10">
+                <!--  right menu for login and profiles options-->
+            </li>
+        </ul>
+    </div>
+</div>
+   {% endblock header %}
+
+
+{% block pagecontainer %}
+
+ 
+
+ {% block maincontent %}
+ <div class="main-content">
+    <div class="container-fluid">
+        <h1 style="text-align: left;">Liste des Livraison</h1>
+        <div class="card" >
+            
+                            <div class="card-body">
+                                <div class="row m-v-10">
+                                    <div class="col-11"></div>
+                                    <div class="col-1"><a href="{% url 'livraison_form' %}" class="media-hover" >
+                                        <span class="badge badge-pill badge-gradient-success"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </a></div>
+                                </div>
+                                
+                                    
+                           
+                                <div class="table-overflow">
+                                    <table id="dt-opt" class="table table-hover table-xl">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ref Commande</th>
+                                                <th>Produit</th>                                               
+                                                <th>Qte</th>                                                
+                                                <th>Date Livr</th>
+                                                <th>Date Exp</th>                                                
+                                                <th>Partenaire</th>
+                                                <th>#</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                           
+                                           
+
+                                            {% for livraison in livraisons_list %}
+                                            <tr>
+                                                <td>{{forloop.counter}}   </td>  
+                                                <td> {{livraison.commande.ref_commande}}  </td> 
+                                                <td>  {{livraison.commande.produit}} </td>                                                 
+                                                <td>  {{livraison.quantite|intcomma}} </td> 
+                                                                                     
+                                                <td>{{livraison.date_livraison}}</td>                                                
+                                                <td>{{livraison.date_exp}}</td>
+                                                
+                                                <td> {{livraison.commande.partenaire}}</td>
+                                                <td class="text-center font-size-18">
+                                                    <a href="{%url 'livraison_update' livraison.pk %}" class="text-gray m-r-15"><i class="ti-pencil"></i></a>
+                                                    
+                                                    <a href="{%url 'livraison_delete' livraison.pk %}" class="text-gray" onclick="return confirm('Etes vous sûr de vouloir supprimer cette livraison?');"><i class="ti-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div> 
+                            </div>       
+                        </div>
+
+    </div>
+   
+</div>
+
+ {%  endblock maincontent %}
+ {% block footer%}
+ <footer class="content-footer">
+    <div class="footer">
+        <div class="copyright">
+            <span>Copyright © 2022 <b class="text-dark">Lopez</b>. All rights reserved.</span>
+            
+        </div>
+    </div>
+</footer>
+ {% endblock footer%}
+
+{% endblock pagecontainer %}

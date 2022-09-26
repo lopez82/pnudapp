@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}APPMed{% endblock title %}
+   {% block header %}
+   <div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+            <a href="{% url 'home' categorie %}">
+                <div class="logo logo-dark" style="background-image: url({% static 'images/logo/abrema.jpg' %});"></div>
+                <div class="logo logo-white" style="background-image: url({% static 'images/logo/logo-white.png' %});"></div>
+            </a>
+        </div>
+        <ul class="nav-left">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <!-- <img src="{% static 'images/logo/burundi.png' %} " alt="" class=""> -->
+        <h1 class="text-info m-v-10" style="text-align: center;">Analyse selon la Consommation moyenne Mensuel (CMM)</h1>
+        
+        
+        <ul class="nav-right">
+            <li class="m-r-10">
+                <!--  right menu for login and profiles options-->
+            </li>
+        </ul>
+    </div>
+</div>
+   {% endblock header %}
+
+
+{% block pagecontainer %}
+
+ 
+
+ {% block maincontent %}
+ <div class="main-content">
+    <div class="container-fluid">
+        <div class="m-b-10">
+        <ul class="nav nav-pills av-justified ">
+            <li class="nav-item">
+                <a class="nav-link btn btn-info {% if  request.path == '/' %} active {% elif  request.path == '/2'  %} active {% endif %}" href="{% url 'home' 2 %}">Medicaments</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-info {% if request.path == '/1' %} active {% endif %}" href="{% url 'home' 1 %}">Consommables</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link btn btn-info {% if request.path == '/3' %} active {% endif %}" href="{% url 'home' 3 %}">Medicaments IO</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-info {% if request.path == '/4' %} active {% endif %}" href="{% url 'home' 4 %}">Reactifs CV</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-info {% if request.path == '/5' %} active {% endif %}" href="{% url 'home' 5 %}">Tests rapides</a>
+              </li>
+          </ul> 
+        </div>  
+        
+        <div class="card-body">
+            <form class="form-inline" method="post" action="{% url 'home' categorie %}">
+                {% csrf_token %}
+               
+                <label class="control-label m-r-10"><b>Du:</b> </label>
+                <select type="text" class="form-control m-b-20 m-r-15" name="mois_du" id="mois_du" >
+                    
+                    <option value="01">Janvier</option>
+                    <option value="02">Fevrier</option>
+                    <option value="03">Mars</option>
+                    <option value="04">Avril</option>
+                    <option value="05">Mai</option>
+                    <option value="06">Juin</option>
+                    <option value="07" selected="selected">Juillet</option>
+                    <option value="08">Aout</option>
+                    <option value="09">Septembre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Decembre</option>
+
+                </select>
+                <select class="form-control m-b-20 m-r-15" name="annee_du" id="annee_du">
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                </select>
+                
+                <label class="control-label m-r-10"><b>Au:</b> </label>
+                <select type="text" class="form-control m-b-20 m-r-15" name="mois_au" id="mois_au" >
+                    
+                    <option value="01">Janvier</option>
+                    <option value="02">Fevrier</option>
+                    <option value="03">Mars</option>
+                    <option value="04">Avril</option>
+                    <option value="05">Mai</option>
+                    <option value="06">Juin</option>
+                    <option value="07" selected="selected">Juillet</option>
+                    <option value="08">Aout</option>
+                    <option value="09">Septembre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Decembre</option>
+
+                </select>
+                <select class="form-control m-b-20 m-r-15" name="annee_au" id="annee_au">
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                </select>
+                
+                <button type="submit" class="btn btn-gradient-success m-b-20">Submit</button>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">           
+                    
+                <div class="card">
+                    <div class="card-header border bottom">
+                        <h4 class="card-title"><h2 class="text-info">1. Presentation Dashbord </h2></h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="col-md-4">
+                            <canvas id="myChart"></canvas>
+                        </div> -->
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">CMM</th>
+                                    <th scope="col">CAMEBU </th>
+                                    <th scope="col">Qte risq. Peremp.</th>
+                                    <th scope="col">SDU</th>
+                                    <th scope="col">MSD</th>
+                                    <th scope="col">Fin probable</th>
+                                    <th scope="col">Cde en cours</th>
+                                    <th scope="col">Rupture avant livraison </th>
+                                    <th scope="col">SDU Total</th>
+                                    <th scope="col">Fin probable</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for result in results %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ result.designation }}</td>
+                                    <td>{{ result.cmm|intcomma }}</td>
+                                    <td><a href="{% url 'inventaire_produit_list' result.produit_id result.mois result.annee %}">{{ result.quantite_sage|intcomma }}</a></td>
+                                    <td>{{result.quantite_exp|intcomma }}</td>                                    
+                                    <td>{{ result.stock_utilisable|intcomma }}</td> 
+                                    <td>{{result.msd_stock}}</td>                         
+                                    <td>{{ result.fin_prob }}</td>
+                                    <td>{{ result.quantite_commande |intcomma }}</td>
+                                    <td><span {% if result.rupture_av_livraison == "Oui" %} class="text-success" {%else%}  class="text-danger" {%endif%}>{{ result.rupture_av_livraison }}</span></td>
+                                    <td>{{ result.stock_dispo_commande|intcomma}}</td>
+                                    <td>{{ result.fin_prob_stock_commande }}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>   
+                   
+            
+                  
+            </div>
+            <!-- <div class="col-md-4">
+               <div class="card">
+                <div class="card-header border bottom">MSD</div>
+                <div class="card-body">
+                    
+                        <canvas id="myChart"></canvas>
+                    
+                </div>
+
+               </div>
+            </div> -->
+        </div>
+       <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom"> <h2 class="text-info">2. Liste des produits à risque de peremption sur la periode</h2></div>
+                <div class="card-body">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Designation</th>
+            <th scope="col">Qte risq Peremp</th>
+            <th scope="col">Cout Unitaire</th>
+            <th scope="col">Cout Total</th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        {% for resultat in result_produit_perim %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ resultat.designation }}</td>
+            <td>{{ resultat.quantite_exp | intcomma }}</td>
+            <td>{{ resultat.prix_unitaire | intcomma }}</td>
+            <td>{{ resultat.prix_total |intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom"><h2 class="text-info">3. Liste des produits à risque de rupture sur la periode</h2></div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Date fin</th>
+                                <th scope="col">Duree rupture</th>
+                                
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                            {% for resultat in resultat_rupture_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ resultat.designation }}</td>
+                                <td>{{ resultat.fin_prob_stock_commande }}</td>
+                                <td>{{ resultat.duree_rupture }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+       </div>
+
+
+       <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom"> <h2 class="text-info">4. Liste des produits sous stockes (MSD &lt; 6 mois)</h2></div>
+                <div class="card-body">
+<table class="table table-bordered">
+    <thead>
+        <th scope="row">#</th>
+        <th scope="row">Designation</th>
+        <th scope="row">SDU</th>
+        <th scope="row">MSD</th>
+    </thead>
+    <tbody>
+        {% for r in resultat_msd_inf6 %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ r.designation }}</td>
+            <td>{{r.stock_utilisable}}</td>
+            <td>{{r.msd_stock}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom"><h2 class="text-info">5. Liste des produits bien stockes (6&lt;MSD&lt;12mois)</h2></div>
+                <div class="card-body">
+                    
+                    <table class="table table-bordered">
+                        <thead>
+                            <th scope="row">#</th>
+                            <th scope="row">Designation</th>
+                            <th scope="row">SDU</th>
+                            <th scope="row">MSD</th>
+                        </thead>
+                        <tbody>
+                            {% for r in resultat_msd_sup6_inf12 %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ r.designation }}</td>
+                                <td>{{r.stock_utilisable}}</td>
+                                <td>{{r.msd_stock}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom"><h2 class="text-info">6. Liste des produits sur stockes (&gt; 6mois)</h2></div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th scope="row">#</th>
+                            <th scope="row">Designation</th>
+                            <th scope="row">SDU</th>
+                            <th scope="row">MSD</th>
+                        </thead>
+                        <tbody>
+                            {% for r in resultat_msd_sup6 %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ r.designation }}</td>
+                                <td>{{r.stock_utilisable}}</td>
+                                <td>{{r.msd_stock}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+       </div>
+        
+    
+    </div>
+</div>
+ {%  endblock maincontent %}
+ {% block footer%}
+ <footer class="content-footer">
+    <div class="footer">
+        <div class="copyright">
+            <span>Copyright © 2022 <b class="text-dark">Lopez</b>. All rights reserved.</span>
+            
+        </div>
+    </div>
+</footer>
+ {% endblock footer%}
+
+{% endblock pagecontainer %}
+{% block js%}
+    <script>
+        (
+()=>{
+const ctx = document.getElementById('myChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [ {% for result in results %} '{{ result.designation }}' ,  {% endfor %}],
+        datasets: [{
+            axis:'y',
+            label: '# MSD',
+            data: [ {% for result in results %} {{ result.msd_stock_commande }} ,  {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+      }
+});
+
+}
+)();
+    </script>
+{% endblock js%}

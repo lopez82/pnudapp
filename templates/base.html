@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+{%load static %}
+
+
+{{ form.media }}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="{% static 'images/logo/apple-touch-icon.png' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}">
+
+    <!-- core dependcies css -->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/dist/css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/PACE/themes/blue/pace-theme-minimal.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/perfect-scrollbar/css/perfect-scrollbar.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css' %}" />
+
+    <!-- page css -->
+    <link rel="stylesheet" href="{% static 'vendor/datatables/media/css/dataTables.bootstrap4.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/jvectormap-master/jquery-jvectormap-2.0.3.css' %}" />
+    <!-- core css -->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/themify-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/materialdesignicons.min.css' %} " rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <div class="layout">
+            <!-- Header START -->
+            {% block header %}
+
+            {% endblock header %}
+            
+            <!-- Header END -->
+
+            <!-- Side Nav START -->
+            <div class="side-nav expand-lg">
+                <div class="side-nav-inner">
+                    <ul class="side-nav-menu scrollable">
+                        <li class="side-nav-header">
+                            <span>Navigation</span>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="ti ti-layout-menu-v"></i>
+                                </span>
+                                <span class="title">VIH</span>
+                                <span class="arrow">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="active">
+                                    
+                                   <!--  <a href="{% url 'home' 2 %}">
+                                        <i class="fa fa-bar-chart p-r-5" aria-hidden="true"></i>Dashbord
+                                   </a> -->
+                                   <a class="dropdown-toggle" href="javascript:void(0);">
+                                    <span class="icon-holder">
+                                        <i class="mdi mdi-menu"></i>
+                                    </span>
+                                    <span class="title">Dashbord</span>
+                                    <span class="arrow">
+                                        <i class="mdi mdi-chevron-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{% url 'home' 2 %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> CMM</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'home_dmm' 2 %}"><span class="icon-holder"><i class="fa fa-bar-chart" aria-hidden="true"></i></span> DMM</a>
+                                    </li>
+                                </ul>
+
+
+                                </li>
+                                <li>
+                                    <a href="{% url 'inventaire_list' %}"><span class="icon-holder"><i class="fa fa-database" aria-hidden="true"></i></span> Inventaires</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'commande_list' %}"><span class="icon-holder"><i class="fa fa-cart-plus" aria-hidden="true"></i></span> Commandes</a>
+                                </li>
+                                <!-- <li>
+                                    <a href="{% url 'livraison_list' %}">
+                                        <i class="fa fa-thermometer-empty p-r-5" aria-hidden="true"></i>                    
+                                        Livraison</a>
+                                </li> -->
+                                <li>
+                                    <a href="{% url 'sortie_list' %}"><span class="icon-holder"><i class="fa fa-minus-square" aria-hidden="true"></i></span> Sorties</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><span class="icon-holder"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span> Rapports</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="ti ti-layout-media-center"></i>
+                                </span>
+                                <span class="title">TB</span>
+                                <span class="arrow">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="active">
+                                    <a href=""><i class="fa fa-bar-chart" aria-hidden="true"></i>Dashbord</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="ti ti-layers-alt"></i>
+                                </span>
+                                <span class="title">Malaria</span>
+                                <span class="arrow">
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="active">
+                                    <a href=""> <i class="fa fa-bar-chart" aria-hidden="true"></i>Dashbord</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                         
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Side Nav END -->
+
+            <!-- Page Container START -->
+            
+            <div class="page-container">
+            {% block pagecontainer %}
+                 <!-- Quick View START -->
+                 {% block quickview%}
+ 
+                 {% endblock quickview%}
+                 
+                 <!-- Side Panel END -->
+ 
+                 <!-- Content Wrapper START -->
+                 {% block maincontent %}
+                 {%  endblock maincontent %}
+                 
+                 <!-- Content Wrapper END -->
+ 
+                 <!-- Footer START -->
+                 {% block footer%}
+                 {% endblock footer%}
+                 
+                 <!-- Footer END -->
+
+            {% endblock pagecontainer %}
+               
+
+            </div>
+            <!-- Page Container END -->
+
+        </div>
+    </div>
+
+    <!-- build:js assets/js/vendor.js -->
+    <!-- core dependcies js -->
+    <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{%  static 'vendor/bootstrap/dist/js/bootstrap.js' %}"></script>
+    <script src="{%  static 'vendor/PACE/pace.min.js' %}"></script>
+    <script src="{%  static 'vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js' %}"></script>     
+    <script src="{%  static 'vendor/d3/d3.min.js' %}"></script>
+    <script src="{%  static 'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{%  static 'js/app.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- build:js assets/js/app.min.js -->
+    <!-- core js -->
+    {% block js%}
+    
+    {% endblock js%}
+    
+    <!-- endbuild -->
+
+    <!-- page js -->
+    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/tables/data-table.js' %}"></script>
+
+
+    <script src="{% static 'vendor/chart.js/dist/Chart.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+    
+    
+    <script src="{% static 'vendor/jvectormap-master/jquery-jvectormap-2.0.3.min.js' %}"></script>
+    <script src="{% static 'js/maps/vector-map-lib/jquery-jvectormap-world-mill.js' %}"></script>
+    <script src="{% static 'js/widgets/widgets-data.js' %}"></script>
+    <script>
+        $(document).ready(
+            function(){
+                $(document).on('click', '.confirm-delete', function () {
+                    $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+                    console.log($(this))
+                  });
+                  
+                  $(document).on('click', '#confirmDeleteButtonModal', function () {
+                    var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+                    window.location = $("#".concat(caller)).attr("href");
+                    form_confirm.submit();
+                  });
+            
+            }
+        )
+       
+    </script>
+    
+</body>
+
+</html>
