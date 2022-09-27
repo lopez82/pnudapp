@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
 
     }
 } """
-# production
+""" # production cleardb
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -110,6 +110,20 @@ DATABASES = {
         'HOST': 'us-cdbr-east-06.cleardb.net',
         'USER':'b4c6a748829ce6',
         'PASSWORD':'251248f1',
+        'PORT':'3306',
+
+    }
+}
+ """
+
+# production cleardb
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hadghzsarl8512iz',
+        'HOST': 'cwe1u6tjijexv3r6.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'USER':'s0gyazlxakvbsvkm',
+        'PASSWORD':'to5e0mfh6pqj6p36',
         'PORT':'3306',
 
     }
