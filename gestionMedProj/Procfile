@@ -1,1 +1,1 @@
-web: gunicorn gestionMedProj.wsgi 
+web: gunicorn gestionMedProj.wsgi --log-file -
