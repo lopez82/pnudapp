@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-# mysql connection
+# mysql connection local
 """ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -102,8 +102,22 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
 
     }
 } """
-
+# production
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'heroku_3a1b07388ef81a9',
+        'HOST': 'us-cdbr-east-06.cleardb.net',
+        'USER':'b4c6a748829ce6',
+        'PASSWORD':'251248f1',
+        'PORT':'3306',
+
+    }
+}
+
+
+
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd45boge36fahgi',
@@ -113,7 +127,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+ """
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
