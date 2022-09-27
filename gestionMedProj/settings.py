@@ -88,7 +88,9 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+
+# mysql connection
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gestionmed',
@@ -97,6 +99,17 @@ DATABASES = {
         'PASSWORD':'',
         'PORT':'3306',
 
+    }
+} """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd45boge36fahgi',
+        'USER': 'ctkqlfgdvwbpji',
+        'PASSWORD': 'ee3efe7cfad571abd83a95090b881e84e54230bbb67062bd553935b0e0f080c3',
+        'HOST': 'ec2-18-209-78-11.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
