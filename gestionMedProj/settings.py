@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-i-^j$^ml+!y+!q)78ucg4f-0xbpry^74(a3id*w@0zv+tce#cd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','pnudapp.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1','pnudapp.herokuapp.com']
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
