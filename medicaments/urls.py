@@ -15,10 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import InventaireProduitListView, InventaireCreateView, InventaireUpdateView, LivraisonUpdateView, delete_commande, delete_inventaire, home,home_dmm,CommandeCreateView,CommandeListView,CommandeUpdateView,BonLivraisonCreateView,LivraisonListView,LivraisonUpdateView,SortieCreateView,SortieListView,SortieUpdateView,InventaireListView,sortie_delete,livraison_delete,get_products_ajax
+from .views import DmmCreateView, DmmListView, DmmUpdateView, InventaireProduitListView, InventaireCreateView, InventaireUpdateView, LivraisonUpdateView, ProduitCreateView,ProduitListView, delete_commande, delete_inventaire, get_ajax_dernier_six_mois, get_ajax_gauge, get_ajax_msd_produit, home,home_dmm,CommandeCreateView,CommandeListView,CommandeUpdateView,BonLivraisonCreateView,LivraisonListView,LivraisonUpdateView,SortieCreateView,SortieListView,SortieUpdateView,InventaireListView,ProduitUpdateView,produit_delete,sortie_delete,livraison_delete,get_products_ajax,get_ajax_line,delete_dmm
 
 urlpatterns = [
-    path('', home,name='home'),    
+   path('', home,name='home'), 
+   
+    #########produits URL ####
+    path('produits/', ProduitListView.as_view(),name='produit_list'),  
+    path('produits/create', ProduitCreateView.as_view(),name='produit_form'),
+    path('produits/<int:pk>/update', ProduitUpdateView.as_view(),name='produit_update'),
+    path('produits/<int:pk>/delete', produit_delete,name='produit_delete'),
+    path('produits/api/msd_produit/', get_ajax_msd_produit,name='get_ajax_msd_produit'),
+    path('produits/api/gauge_produit/', get_ajax_gauge,name='get_ajax_gauge'),  
+    path('produits/api/dmm_produit/', get_ajax_line,name='get_ajax_line'), 
+   
+   
     path('<int:categorie>', home,name='home'),
     path('dmm/<int:categorie>', home_dmm,name='home_dmm'),#dashbord page for dmm
     path('commandes/create', CommandeCreateView.as_view(),name='commande_form'),
@@ -43,5 +54,13 @@ urlpatterns = [
     path('inventaires/<int:pk>/update', InventaireUpdateView.as_view(),name='inventaire_update'),   
     path('inventaires/<int:pk>/delete', delete_inventaire,name='delete_inventaire'),    
     path('inventaires/list', InventaireListView.as_view(),name='inventaire_list'),  
-    path('inventaires/<int:produit_id>/<int:mois>/<int:annee>', InventaireProduitListView.as_view(),name='inventaire_produit_list'),  
+    path('inventaires/<int:produit_id>/<int:mois>/<int:annee>', InventaireProduitListView.as_view(),name='inventaire_produit_list'),
+
+
+    path('params/dmm', DmmListView.as_view(),name='dmm_list'), 
+    path('params/dmm/create', DmmCreateView.as_view(),name='dmm_form'), 
+    path('params/dmm/get_ajax_dernier_six_mois', get_ajax_dernier_six_mois,name='get-ajax-dernier-six-mois'),
+    path('params/dmm/<int:pk>/update', DmmUpdateView.as_view(),name='dmm_update'), 
+    path('params/dmm/<int:pk>/delete', delete_dmm,name='delete_dmm'),
+    
 ]

@@ -1,21 +1,43 @@
-from pyexpat import model
+#from pyexpat import model
 #from tkinter import Widget
+from random import choices
+from tkinter import Widget
 from django.forms import ModelForm,inlineformset_factory,TextInput
 from django import forms
 #from bootstrap_datepicker_plus.widgets import DateTimePickerInput
-from .models import BonLivraison, InventaireSage, Sortie, Categorie, EtatCommande,Commande, Partenaire,Produit
+from .models import BonLivraison, CoutUnitaire, DistrMoy, InventaireSage, Sortie, Categorie, EtatCommande,Commande, Partenaire,Produit
 from medicaments import models
 
-     
+
+class ProduitForm(ModelForm):
+    class Meta:
+        model = Produit
+        fields = ['designation','categorie','programme','num_ref','dashbord','classification','abbreviation','conditionnement','dosage','formulation'] 
+    
+
+class CoutUnitaireForm(ModelForm):
+    class Meta:
+        model = CoutUnitaire
+        fields = ['cout','date_debut','date_fin']
+    
+
+CoutUnitaireInlineFormSet = inlineformset_factory(Produit,CoutUnitaire,form=CoutUnitaireForm,extra=1,can_delete=1,widgets ={            
+            'date_debut':forms.TextInput(attrs={
+                'class': 'form-control datainput','id':'datepicker1','data-provide':'datepicker'}),
+            'date_fin':forms.TextInput(attrs={
+                'class': 'form-control datainput','id':'datepicker2','data-provide':'datepicker'})
+
+        })
+
 class CommandeForm(ModelForm):    
     categorie = forms.ModelChoiceField(queryset=Categorie.objects.all())
     produit_commande = forms.ModelChoiceField(queryset=Produit.objects.all()) 
-    date_exp = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control datainput','id':'datepicker1','data-provide':'datepicker'}))
+    #date_exp = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control datainput','id':'datepicker1','data-provide':'datepicker'}))
     date_livraison = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control datainput','id':'datepicker2','data-provide':'datepicker'}))
     partenaire = forms.ModelChoiceField(queryset=Partenaire.objects.all())
     class Meta:
         model = Commande
-        fields =('categorie','produit_commande','lot_commande','quantite_commande','prix_unitaire','date_exp','date_livraison','partenaire','observation')
+        fields =('categorie','produit_commande','lot_commande','quantite_commande','prix_unitaire','date_livraison','partenaire','observation')
         widgets ={
             'observation':forms.Textarea(attrs={
                 'cols':10,'rows':5
@@ -62,6 +84,18 @@ class SortieForm(ModelForm):
                 'class': 'form-control datainput','id':'datepicker1','data-provide':'datepicker'})
 
         }
+
+class DmmForm(ModelForm): 
+   
+    categorie = forms.ModelChoiceField(queryset=Categorie.objects.all())
+    produit = forms.ModelChoiceField(queryset=Produit.objects.all(),widget=forms.Select(attrs={'class':'input_six_mois'})) 
+    #annee = forms.IntegerField(widget=forms.Select(attrs={'class':'input_six_mois'},choices=ANNEE_CHOICES))
+    #mois = forms.IntegerField(widget=forms.Select(attrs={'class':'input_six_mois'},choices=MOIS_CHOICES))
+    
+    class Meta:
+        model = DistrMoy
+        fields =('categorie','produit','annee','mois','value')
+        
 
 
 

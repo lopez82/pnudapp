@@ -68,27 +68,30 @@
                                     <span class="icon-holder">
                                         <i class="mdi mdi-menu"></i>
                                     </span>
-                                    <span class="title">Dashbord</span>
+                                    <span class="title">Tableau de Bord</span>
                                     <span class="arrow">
                                         <i class="mdi mdi-chevron-right"></i>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{% url 'home' 2 %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> CMM</a>
+                                        <a href="{% url 'get_ajax_msd_produit' %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> Graphiques</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'home_dmm' 2 %}"><span class="icon-holder"><i class="fa fa-bar-chart" aria-hidden="true"></i></span> DMM</a>
+                                        <a href="{% url 'home' 2 %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> Analyse - CMM</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'home_dmm' 2 %}"><span class="icon-holder"><i class="fa fa-bar-chart" aria-hidden="true"></i></span> Analyse - DMM</a>
                                     </li>
                                 </ul>
 
 
                                 </li>
                                 <li>
-                                    <a href="{% url 'inventaire_list' %}"><span class="icon-holder"><i class="fa fa-database" aria-hidden="true"></i></span> Inventaires</a>
+                                    <a href="{% url 'inventaire_list' %}"><span class="icon-holder"><i class="fa fa-database" aria-hidden="true"></i></span> Etat stock CAMEBU</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'commande_list' %}"><span class="icon-holder"><i class="fa fa-cart-plus" aria-hidden="true"></i></span> Commandes</a>
+                                    <a href="{% url 'commande_list' %}"><span class="icon-holder"><i class="fa fa-cart-plus" aria-hidden="true"></i></span> Commandes en Cours</a>
                                 </li>
                                 <!-- <li>
                                     <a href="{% url 'livraison_list' %}">
@@ -96,11 +99,37 @@
                                         Livraison</a>
                                 </li> -->
                                 <li>
-                                    <a href="{% url 'sortie_list' %}"><span class="icon-holder"><i class="fa fa-minus-square" aria-hidden="true"></i></span> Sorties</a>
+                                    <a href="{% url 'sortie_list' %}"><span class="icon-holder"><i class="fa fa-minus-square" aria-hidden="true"></i></span> Sorties de stock </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)"><span class="icon-holder"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span> Rapports</a>
                                 </li>
+                                <li class="active">
+                                    
+                                    <!--  <a href="{% url 'home' 2 %}">
+                                         <i class="fa fa-bar-chart p-r-5" aria-hidden="true"></i>Dashbord
+                                    </a> -->
+                                    <a class="dropdown-toggle" href="javascript:void(0);">
+                                     <span class="icon-holder">
+                                         <i class="mdi mdi-menu"></i>
+                                     </span>
+                                     <span class="title">Administration</span>
+                                     <span class="arrow">
+                                         <i class="mdi mdi-chevron-right"></i>
+                                     </span>
+                                 </a>
+                                 <ul class="dropdown-menu">
+                                     <li>
+                                         <a href="{% url 'produit_list'  %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> Produits</a>
+                                     </li>
+                                     <li>
+                                        <a href="{% url 'dmm_list'  %}"><span class="icon-holder"> <i class="fa fa-area-chart" aria-hidden="true"></i></span> DMM</a>
+                                    </li>
+                                     
+                                 </ul>
+ 
+ 
+                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -186,6 +215,7 @@
     <script src="{%  static 'vendor/d3/d3.min.js' %}"></script>
     <script src="{%  static 'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script src="{%  static 'js/app.js' %}"></script>
     <!-- endbuild -->
 
@@ -198,7 +228,7 @@
     <!-- endbuild -->
 
     <!-- page js -->
-    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.js' %}"></>
     <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap4.min.js' %}"></script>
     <script src="{% static 'js/tables/data-table.js' %}"></script>
 
@@ -210,12 +240,18 @@
     <script src="{% static 'vendor/jvectormap-master/jquery-jvectormap-2.0.3.min.js' %}"></script>
     <script src="{% static 'js/maps/vector-map-lib/jquery-jvectormap-world-mill.js' %}"></script>
     <script src="{% static 'js/widgets/widgets-data.js' %}"></script>
+
+    <!--chartjs gauge -->
+    <script src="https://unpkg.com/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+    <script src="https://unpkg.com/chartjs-gauge@0.3.0/dist/chartjs-gauge.js"></script>
+</script>
+<script src="https://unpkg.com/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.js"></script>
     <script>
         $(document).ready(
             function(){
                 $(document).on('click', '.confirm-delete', function () {
                     $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
-                    console.log($(this))
+                    //console.log($(this))
                   });
                   
                   $(document).on('click', '#confirmDeleteButtonModal', function () {
@@ -228,7 +264,7 @@
         )
        
     </script>
-    
+ 
 </body>
 
 </html>

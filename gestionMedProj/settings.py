@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
 
 
 # mysql connection local
-""" DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gestionmed',
@@ -101,22 +101,10 @@ WSGI_APPLICATION = 'gestionMedProj.wsgi.application'
         'PORT':'3306',
 
     }
-} """
-""" # production cleardb
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'heroku_3a1b07388ef81a9',
-        'HOST': 'us-cdbr-east-06.cleardb.net',
-        'USER':'b4c6a748829ce6',
-        'PASSWORD':'251248f1',
-        'PORT':'3306',
+} 
+"""
 
-    }
-}
- """
-
-# production cleardb
+# production jwdb production 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

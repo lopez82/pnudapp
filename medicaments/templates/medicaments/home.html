@@ -46,7 +46,7 @@
         <div class="m-b-10">
         <ul class="nav nav-pills av-justified ">
             <li class="nav-item">
-                <a class="nav-link btn btn-info {% if  request.path == '/' %} active {% elif  request.path == '/2'  %} active {% endif %}" href="{% url 'home' 2 %}">Medicaments</a>
+                <a class="nav-link btn btn-info {% if  request.path == '/' %} active {% elif  request.path == '/2'  %} active {% endif %}" href="{% url 'home' 2 %}">Medicaments ARVs</a>
               </li>
             <li class="nav-item">
               <a class="nav-link btn btn-info {% if request.path == '/1' %} active {% endif %}" href="{% url 'home' 1 %}">Consommables</a>
@@ -56,11 +56,14 @@
               <a class="nav-link btn btn-info {% if request.path == '/3' %} active {% endif %}" href="{% url 'home' 3 %}">Medicaments IO</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn btn-info {% if request.path == '/4' %} active {% endif %}" href="{% url 'home' 4 %}">Reactifs CV</a>
+              <a class="nav-link btn btn-info {% if request.path == '/4' %} active {% endif %}" href="{% url 'home' 4 %}">Reactifs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link btn btn-info {% if request.path == '/5' %} active {% endif %}" href="{% url 'home' 5 %}">Tests rapides</a>
-              </li>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link btn btn-info {% if request.path == '/6' %} active {% endif %}" href="{% url 'home' 6 %}">Preservatifs</a>
+            </li>
           </ul> 
         </div>  
         
@@ -148,7 +151,7 @@
                                 {%for result in results %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ result.designation }}</td>
+                                    <td><a href="#" data-toggle="tooltip" title="{{ result.designation }}">{% if result.abbreviation is None %} {{result.designation}} {% else %} {{result.abbreviation}} {%endif%}</a></td>
                                     <td>{{ result.cmm|intcomma }}</td>
                                     <td><a href="{% url 'inventaire_produit_list' result.produit_id result.mois result.annee %}">{{ result.quantite_sage|intcomma }}</a></td>
                                     <td>{{result.quantite_exp|intcomma }}</td>                                    

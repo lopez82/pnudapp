@@ -46,13 +46,13 @@
  {% block maincontent %}
  <div class="main-content">
     <div class="container-fluid">
-        <h1 style="text-align: left;">Liste des commandes</h1>
+        <h1 style="text-align: left;">Liste des Moyennes de Distribution</h1>
         <div class="card" >
             
                             <div class="card-body">
                                 <div class="row m-v-10">
                                     <div class="col-11"></div>
-                                    <div class="col-1"><a href="{% url 'commande_form' %}" class="media-hover" >
+                                    <div class="col-1"><a href="{% url 'dmm_form' %}" class="media-hover" >
                                         <span class="badge badge-pill badge-gradient-success"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     </a></div>
                                 </div>
@@ -66,11 +66,9 @@
                                                 <th>#</th>                                               
                                                 <th>Categorie</th>
                                                 <th>Produit</th>
-                                                <th>Qte</th>
-                                                <th>PU</th>
-                                                <th>Date Livr</th>
-                                                                                              
-                                                <th>Source</th>
+                                                <th>Annee</th>
+                                                <th>Mois</th>
+                                                <th>DMM</th>                                                 
                                                 <th>#</th>                                                
                                             </tr>
                                         </thead>
@@ -78,21 +76,19 @@
                                             
                                           
 
-                                            {% for commande in commandes_list %}
+                                            {% for dmm in dmm_list %}
                                             <tr>
                                                 <td>{{forloop.counter}}   </td>                                                                                                 
-                                                <td>  {{commande.produit_commande.categorie.nom}} </td> 
-                                                <td>  {{commande.produit_commande}} </td> 
-                                                <td>  {{commande.quantite_commande|intcomma}} </td> 
-                                                <td> {{commande.prix_unitaire|intcomma}} USD$  </td>                                      
-                                                <td>{{commande.date_livraison}}</td>
-                                                <!-- <td><span class="badge badge-pill badge-gradient-success">Actived</span></td> -->
-                                                                                              
-                                                <td> {{commande.partenaire}}</td>
+                                                <td>  {{dmm.produit.categorie.nom}} </td> 
+                                                <td>  {{dmm.produit.designation}} </td> 
+                                                <td>  {{dmm.annee}} </td> 
+                                                <td> {{dmm.mois}} </td>                                      
+                                                <td>{{dmm.value}}</td>
+                                                
                                                 <td class="text-center font-size-18">
-                                                    <a href="{%url 'commande_update' commande.pk %}" class="text-gray m-r-15"><i class="ti-pencil"></i></a>
-                                                    {% include 'medicaments/confirm_delete_modal.html' %}
-                                                    <a href="{%url 'delete_commande' commande.pk %}" class="text-gray confirm-delete" onclick="confirm('Etes vous sur de vouloir supprimer la commande?')"><i class="ti-trash"></i></a>
+                                                    <a href="{%url 'dmm_update' dmm.pk %}" class="text-gray m-r-15"><i class="ti-pencil"></i></a>
+                                                   
+                                                    <a href="{%url 'delete_dmm' dmm.pk %}" class="text-gray confirm-delete" onclick="confirm('Etes vous sur de vouloir supprimer la dmm?')"><i class="ti-trash"></i></a>
                                                 </td>
                                             </tr>
                                         {% endfor %}

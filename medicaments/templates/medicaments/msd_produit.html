@@ -1,0 +1,712 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}APPMed{% endblock title %}
+   {% block header %}
+   <div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+            <a href="{% url 'home' 2 %}">
+                <div class="logo logo-dark" style="background-image: url({% static 'images/logo/abrema.jpg' %});"></div>
+                <div class="logo logo-white" style="background-image: url({% static 'images/logo/logo-white.png' %});"></div>
+            </a>
+        </div>
+        <ul class="nav-left">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="mdi mdi-menu"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <!-- <img src="{% static 'images/logo/burundi.png' %} " alt="" class=""> -->
+        <h1 class="text-info m-v-10" style="text-align: center;">Graphiques</h1>
+        
+        
+        <ul class="nav-right">
+            <li class="m-r-10">
+                <!--  right menu for login and profiles options-->
+            </li>
+        </ul>
+    </div>
+</div>
+   {% endblock header %}
+
+
+{% block pagecontainer %}
+
+ 
+
+ {% block maincontent %}
+ <div class="main-content">
+    <div class="container-fluid">
+         
+      <div class="row">
+        <!-- graphique MSD/produit - right side -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom">
+                    <h4 class="card-title">MSD/Produit</h4>
+                    <form class="m-t-15" id="msd_produit_form" name="msd_produit_form" action="{% url 'get_ajax_msd_produit' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                   
+                                    <label class="control-label">Categorie</label>
+                                   <select name="categorie" id="categorie" class="form-control">
+                                    <option value="2">Médicaments ARVs</option>
+                                    <option value="1">Consommables</option>
+                                    <option value="3">Médicaments IO</option>
+                                    <option value="4">Réactifs</option>
+                                    <option value="5">Tests rapides</option>
+                                    <option value="-">Préservatifs</option>
+
+                                   </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Mois</label>
+                                    <select name="mois" id="mois" class="form-control">
+                                        <option value="01">Janvier</option>
+                                        <option value="02">Fevrier</option>
+                                        <option value="03">Mars</option>
+                                        <option value="04">Avril</option>
+                                        <option value="05">Mai</option>
+                                        <option value="06">Juin</option>
+                                        <option value="07" selected="selected">Juillet</option>
+                                        <option value="08">Aout</option>
+                                        <option value="09">Septembre</option>
+                                        <option value="10">Octobre</option>
+                                        <option value="11">Novembre</option>
+                                        <option value="12">Decembre</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="" class="control-label">Annee</label>
+                                    <select name="annee" id="annee" class="form-control">
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-success"><strong>Valider</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container p-l-0" style="position: relative;">
+                        <canvas id="myChart" height="34%" width="100%"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Gauge - right side -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header border bottom">
+                    <h4 class="card-title">Etat du stock pour un produit </h4>
+                    <form class="m-t-15" id="produit_gauge_form" name="produit_gauge_form" action="{% url 'get_ajax_gauge' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Categorie</label>
+                                   <select name="id_categorie" id="id_categorie" class="form-control">
+                                    <option value="">---Selectionner Categorie---</option>
+                                    <option value="2">Médicaments ARVs</option>
+                                    <option value="1">Consommables</option>
+                                    <option value="3">Médicaments IO</option>
+                                    <option value="4">Réactifs</option>
+                                    <option value="5">Tests rapides</option>
+                                    <option value="-">Préservatifs</option>
+
+                                   </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Produit</label>
+                                <select name="id_produit" id="id_produit" class="form-control">
+
+                                </select>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Mois</label>
+                                    <select name="mois" id="mois" class="form-control">
+                                        <option value="01">Janvier</option>
+                                        <option value="02">Fevrier</option>
+                                        <option value="03">Mars</option>
+                                        <option value="04">Avril</option>
+                                        <option value="05">Mai</option>
+                                        <option value="06">Juin</option>
+                                        <option value="07" selected="selected">Juillet</option>
+                                        <option value="08">Aout</option>
+                                        <option value="09">Septembre</option>
+                                        <option value="10">Octobre</option>
+                                        <option value="11">Novembre</option>
+                                        <option value="12">Decembre</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="" class="control-label">Annee</label>
+                                    <select name="annee" id="annee" class="form-control">
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-success"><strong>Valider</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+                <div class="card-body">
+                    <canvas id="gauge-canvas" name="gauge-canvas" height="100%">
+
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        
+      </div>  
+      <!--line chart-->
+      <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header border bottom">
+                    <h4 class="card-title">Distribution Moyenne Mensuelle par rapport à la consommation Moyenne Mensuelle </h4>
+                    <form class="m-t-15" id="produit_line_form" name="produit_line_form" action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Categorie</label>
+                                   <select name="id_categorie2" id="id_categorie2" class="form-control">
+                                    <option value="">---Selectionner Categorie---</option>
+                                    <option value="2">Médicaments ARVs</option>
+                                    <option value="1">Consommables</option>
+                                    <option value="3">Médicaments IO</option>
+                                    <option value="4">Réactifs</option>
+                                    <option value="5">Tests rapides</option>
+                                    <option value="-">Préservatifs</option>
+
+                                   </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Produit</label>
+                                <select name="id_produit2" id="id_produit2" class="form-control">
+
+                                </select>
+                            </div>
+                            </div>
+                           <!--  <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Mois</label>
+                                    <select name="mois2" id="mois2" class="form-control">
+                                        <option value="01">Janvier</option>
+                                        <option value="02">Fevrier</option>
+                                        <option value="03">Mars</option>
+                                        <option value="04">Avril</option>
+                                        <option value="05">Mai</option>
+                                        <option value="06">Juin</option>
+                                        <option value="07" selected="selected">Juillet</option>
+                                        <option value="08">Aout</option>
+                                        <option value="09">Septembre</option>
+                                        <option value="10">Octobre</option>
+                                        <option value="11">Novembre</option>
+                                        <option value="12">Decembre</option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="" class="control-label">Annee</label>
+                                    <select name="annee2" id="annee2" class="form-control">
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-success"><strong>Valider</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+                <div class="card-body">
+                    <canvas id="line-canvas" name="line-canvas" height="100%">
+
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div> 
+      
+       
+
+      
+       
+        
+    
+    </div>
+</div>
+ {%  endblock maincontent %}
+ {% block footer%}
+ <footer class="content-footer">
+    <div class="footer">
+        <div class="copyright">
+            <span>Copyright © 2022 <b class="text-dark">Lopez</b>. All rights reserved.</span>
+            
+        </div>
+    </div>
+</footer>
+ {% endblock footer%}
+
+{% endblock pagecontainer %}
+{% block js%}
+
+<script>
+    
+    $(document).ready(function(){
+        
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+               labels: [{% for produit in list_produit %} '{{ produit.designation }}' , {% endfor%}],
+               //labels: data.labels,
+               
+                datasets: [{
+                    label: '# msd stock',
+                    data: [{% for produit in list_produit %} '{{ produit.msd_stock }}' , {% endfor %}],
+                   
+                    //data : data.data,
+                   
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }
+                //, insert another set
+                ,{  type:'line',
+                    label:'sous stock: ',
+                    data:[6,6,6,6,6],
+                    fill: false,
+                    borderColor: 'red',
+                    tension: 0.1
+                    
+                }
+                ,{  type:'line',
+                    label:'stock: ',
+                    data:[12,12,12,12,12],
+                    fill: false,
+                    borderColor: 'green',
+                    tension: 0.1
+                    
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        beginAtZero: true
+                    },
+
+                }
+            }
+        });
+        
+        //fin bar chart
+   
+    
+
+    /***partie gauge **/
+
+      //var data = randomData();
+      var data = [6,12,18,24];
+     // var value = randomValue(data);
+      //var value = 7;
+      var value = {% if p_gauge %} {{ p_gauge.msd_stock }} {% else %} 0.0 {% endif %};
+      var config = {
+        type: 'gauge',
+        
+        data: {
+          labels: [ 'danger','Success', 'Warning', 'Fail'],
+          datasets: [{
+            data: data,
+            value: value,
+            backgroundColor: [
+                        'rgba(255, 0, 16, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(255, 159, 64, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        
+                        
+                    ],            
+            //backgroundColor: ['red','green', 'orange', 'yellow' ],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Gauge chart'
+          },
+          layout: {
+            padding: {
+              bottom: 20
+            }
+          },
+          needle: {
+            // Needle circle radius as the percentage of the chart area width
+            radiusPercentage: 2,
+            // Needle width as the percentage of the chart area width
+            widthPercentage: 3.2,
+            // Needle length as the percentage of the interval between inner radius (0%) and outer radius (100%) of the arc
+            lengthPercentage: 80,
+            // The color of the needle
+            color: 'rgba(0, 0, 0, 1)'
+          },
+          valueLabel: {
+            //formatter: Math.round
+            display:true,
+            formatter: (value) => {
+                return Math.round(value*10)/10;
+              }
+          },
+          plugins:{
+            datalabels:{
+                display:true,
+                formatter: function(value,context){
+                    return '<= '+Math.round(value);
+                  },
+                  color: 'rgba(0, 0, 0, 1.0)',
+                  backgroundColor: null,
+                  font: {
+                  size: 20,
+                  weight: 'bold'
+                  }
+            }
+          }
+        }
+      };
+      
+      window.onload = function() {
+        var ctx = document.getElementById('gauge-canvas').getContext('2d');
+        window.myGauge = new Chart(ctx, config);
+      };
+      
+      //window.myGauge.update();
+
+     
+
+    /***end gauge **/    
+
+/*** ligne chart**/
+
+
+const line_labels = [{%for item in dmm.mois %} '{{item}}', {% endfor %} ]
+const line_data = {  
+  labels: line_labels,
+  datasets: [{
+    label: 'DMMp',
+    backgroundColor: 'green',
+    borderColor: 'green',
+    //data: [0, 10, 5, 2, 20, 30, 45,15,8,10,12,35,20],
+    data: [{% for item in dmm.valeur %} '{{item}}', {% endfor %} ],
+    fill:false,
+    tension: 0.1
+  },
+  {
+    label: 'CMM',
+    backgroundColor: 'red',
+    borderColor: 'red',
+    //data: [0, 10, 5, 2, 20, 30, 45,15,8,10,12,35,20],
+    data: [{% for item in dmm.valeur %} 2000, {% endfor %} ],
+    fill:false,
+    tension: 0.1
+  },
+  
+  ]
+};
+const line_ctx = document.getElementById('line-canvas').getContext('2d');
+const line_Chart = new Chart(line_ctx,{
+        type:'line',
+        data:line_data,
+        
+            
+        
+});
+/*** end line chart**/
+
+    
+
+    $('#msd_produit_form').submit(function(e){
+       e.preventDefault();
+      
+        $.ajax({
+            type : "POST",
+            url : "/produits/api/msd_produit/",
+            data : {"categorie":$("#categorie").val(),"mois":$("#mois").val(),"annee":$("#annee").val(), "csrfmiddlewaretoken" : "{{csrf_token}}"},
+            success:function(list_produit){
+                console.log(list_produit);
+                labels =[];
+                data =[];
+
+                list_produit.forEach(function(item){
+                    labels.push(item.designation);
+                    data.push(item.msd_stock);
+                });
+                
+                myChart.data = {
+                    //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                   labels:labels,
+                  
+                   
+                    datasets: [{
+                        label: '# msd stock',
+                        //data: [{% for produit in list_produit %} '{{ produit.msd_stock }}' , {% endfor %}],
+                        data : data,
+                       
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }
+                     //, insert another set
+                ,{  type:'line',
+                label:'msd = 6: ',
+                data:[6,6,6,6,6],
+                fill: false,
+                borderColor: 'red',
+                tension: 0.1
+                
+            }
+            ,{  type:'line',
+                label:'msd = 12: ',
+                data:[12,12,12,12,12],
+                fill: false,
+                borderColor: 'green',
+                tension: 0.1
+                
+            }
+                    ]
+                };
+                
+                
+                myChart.update();
+               
+            },
+            error : function(request,error){
+                console.log("error: "+error);
+            }
+        }
+
+        );
+
+        
+    }
+
+    );
+
+    $('#produit_line_form').submit(function(e){
+        e.preventDefault();
+       
+         $.ajax({
+             type : "POST",
+             url : "/produits/api/dmm_produit/",
+             data : {"categorie2":$("#id_categorie2").val(),"produit2":$("#id_produit2").val(),"annee2":$("#annee2").val(), "csrfmiddlewaretoken" : "{{csrf_token}}"},
+             success:function(data){
+                 console.log(data);
+                 labels = data.mois;
+                 dmm = data.dmm;
+                 cmm = data.cmm;
+ 
+                 
+                 line_Chart.data = {  
+                    labels: labels,
+                    datasets: [{
+                      label: 'DMMp',
+                      backgroundColor: 'green',
+                      borderColor: 'green',
+                      //data: [0, 10, 5, 2, 20, 30, 45,15,8,10,12,35,20],
+                      data: dmm,
+                      fill:false,
+                      tension: 0.1
+                    },
+                    {
+                      label: 'CMM',
+                      backgroundColor: 'red',
+                      borderColor: 'red',
+                      //data: [0, 10, 5, 2, 20, 30, 45,15,8,10,12,35,20],
+                      data: cmm,
+                      fill:false,
+                      tension: 0.1
+                    },
+                    
+                    ]
+                  };
+                 
+                 
+                 line_Chart.update();
+                
+             },
+             error : function(request,error){
+                 console.log("error: "+error);
+             }
+         }
+ 
+         );
+ 
+         
+     }
+ 
+     );
+ 
+
+    $('#produit_gauge_form').submit(function(e){
+        e.preventDefault();
+        
+        if($("#id_produit").val()==null){
+            alert("Veuillez selectionnez un produit!");
+        }
+        $.ajax({
+            type : "POST",
+            url : "/produits/api/gauge_produit/",
+            data : {"categorie":$("#id_categorie").val(),"produit":$("#id_produit").val(),"mois":$("#mois").val(),"annee":$("#annee").val(), "csrfmiddlewaretoken" : "{{csrf_token}}"}, 
+            success:function(data){
+                // on success
+                console.log(data);
+                var msd_stock = data.msd_stock;
+                window.myGauge.data = {
+                    labels: [ 'danger','Success', 'Warning', 'Warning',],
+                    datasets: [{
+                      data: [6,12,18,24],
+                      value: msd_stock,            
+                      //backgroundColor: ['red','green', 'orange', 'yellow' ],
+                      backgroundColor: [
+                        'rgba(255, 0, 16, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(255, 159, 64, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        
+                        
+                    ],   
+                      borderWidth: 2
+                    }]
+                  };
+                window.myGauge.update();
+            } ,
+            error: function(request,error){
+
+                console.log("error: "+error);
+
+            }
+        });
+
+    });
+
+    $("#id_categorie").change(function () {
+        //console.log($(this));
+        const categorie_id = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+        $.ajax({                       // initialize an AJAX request
+            type: "POST",
+            url: '{% url "get-products-ajax" %}',
+            data: {
+                'categorie_id': categorie_id,       // add the country id to the POST parameters
+                "csrfmiddlewaretoken" : "{{csrf_token}}",
+            },
+            success: function (data) {   // `data` is from `get_topics_ajax` view function
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (data) {
+                    html_data += `<option value="${data.id}">${data.designation}</option>`
+                });
+                $("#id_produit").html(html_data); // replace the contents of the topic input with the data that came from the server
+            }
+        });
+    });
+
+    $("#id_categorie2").change(function () {
+        //console.log($(this));
+        const categorie_id2 = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+        $.ajax({                       // initialize an AJAX request
+            type: "POST",
+            url: '{% url "get-products-ajax" %}',
+            data: {
+                'categorie_id': categorie_id2,       // add the country id to the POST parameters
+                "csrfmiddlewaretoken" : "{{csrf_token}}",
+            },
+            success: function (data) {   // `data` is from `get_topics_ajax` view function
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (data) {
+                    html_data += `<option value="${data.id}">${data.designation}</option>`
+                });
+                $("#id_produit2").html(html_data); // replace the contents of the topic input with the data that came from the server
+            }
+        });
+    });
+
+
+    })
+    
+    </script>
+
+{% endblock js%}

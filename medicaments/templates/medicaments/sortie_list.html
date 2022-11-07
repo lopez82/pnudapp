@@ -46,7 +46,7 @@
  {% block maincontent %}
  <div class="main-content">
     <div class="container-fluid">
-        <h1 style="text-align: left;">Liste des Sortie</h1>
+        <h1 style="text-align: left;"> Sorties de stock</h1>
         <div class="card" >
             
                             <div class="card-body">
@@ -79,7 +79,7 @@
                                             {% for sortie in sorties_list %}
                                             <tr>
                                                 <td>{{forloop.counter}}   </td>  
-                                                <td> {{sortie.lot_sortie}}  </td> 
+                                                <td>{% if sortie.lot_sortie == None %} - {% else %} {{sortie.lot_sortie}} {% endif %}  </td> 
                                                 <td>  {{sortie.produit_sortie}} </td>                                                 
                                                 <td>  {{sortie.quantite_sortie|intcomma}} </td> 
                                                                                   
